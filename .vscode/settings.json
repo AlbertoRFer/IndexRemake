@@ -1,0 +1,100 @@
+{
+  /****************************************************
+   *              Editor and workplace                 *
+   ****************************************************/
+  "editor.minimap.enabled": false,
+  "editor.insertSpaces": true,
+  "editor.renderWhitespace": "all",
+  "editor.formatOnSave": true,
+  "editor.fontFamily": "Ubuntu Mono, monospace",
+
+  "testing.automaticallyOpenTestResults": "neverOpen",
+  "window.zoomLevel": 2,
+  "workbench.editor.enablePreview": false,
+
+  "terminal.integrated.env.windows": {
+    "TERM": "xterm-256color",
+    "PYTHONPATH": "${workspaceFolder}"
+  },
+
+  "terminal.integrated.defaultLocation": "editor",
+  "files.exclude": {
+    "**/.git": true,
+    "**/__pycache__": true,
+    "**/.pytest_cache": true,
+    "**/.mypy_cache": true,
+    "**/.pdm-build": true,
+    "**/.pdm-python": true,
+    "**/.venv": true
+  },
+
+  /****************************************************
+   *                      Languages                    *
+   ****************************************************/
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "explicit",
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.rulers": [
+      {
+        "column": 72,
+        "color": "#f7b8b810"
+      },
+      {
+        "column": 88,
+        "color": "#143c19"
+      }
+    ]
+  },
+
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  /****************************************************
+   *                      Extensions                   *
+   ****************************************************/
+
+  // Python
+  "python.analysis.extraPaths": [".venv/Lib/site-packages"],
+  "python.languageServer": "Pylance",
+  //"python.analysis.typeCheckingMode": "off",
+  "python.analysis.autoImportCompletions": false,
+  "python.analysis.fixAll": [],
+
+  "python.testing.pytestArgs": ["tests"],
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestPath": ".venv/Lib/site-packages/pytest",
+  "python.testing.unittestEnabled": false,
+  "python.testing.autoTestDiscoverOnSaveEnabled": false,
+
+  "ruff.lint.enable": true,
+
+  // Mypy (Matan Gover)
+  // "mypy.runUsingActiveInterpreter": true,
+
+  // vscode-icons
+  "workbench.iconTheme": "catppuccin-mocha",
+
+  // vscode-yaml
+  "yaml.schemas": {
+    "https://squidfunk.github.io/mkdocs-material/schema.json": "mkdocs.yml"
+  },
+  "yaml.customTags": [
+    "!ENV scalar",
+    "!ENV sequence",
+    "!relative scalar",
+    "tag:yaml.org,2002:python/name:material.extensions.emoji.to_svg",
+    "tag:yaml.org,2002:python/name:material.extensions.emoji.twemoji",
+    "tag:yaml.org,2002:python/name:pymdownx.superfences.fence_code_format",
+    "tag:yaml.org,2002:python/object/apply:pymdownx.slugs.slugify mapping"
+  ],
+
+  // Qt-Qtml
+  "qt-qml.qmlls.additionalImportPaths": [
+    "/usr/lib/qt6/qml/",
+    "${workspaceFolder}/src/todo/frontend/qml_modules",
+    "${workspaceFolder}/qmltypes"
+  ]
+}
