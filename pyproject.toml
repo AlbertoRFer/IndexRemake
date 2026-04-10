@@ -67,4 +67,5 @@ strict = true
 distribution = true
 
 [tool.pdm.scripts]
-qmltypes = "pyside6-qml-stubgen src/todo/frontend/ --out-dir qmltypes"
+qmltypes = "pyside6-qml-stubgen src/indexremake/bridge/presenters/ --out-dir qmltypes"
+compile_resources = "pyside6-rcc resources/resources.qrc -o src/indexremake/resources_rc.py"
