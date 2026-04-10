@@ -1,11 +1,9 @@
 import os
-import typing
 
 import pytest
-from PySide6 import QtCore
 
 from indexremake import app
-from tests import testing_utils
+from tests.support import pages
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
@@ -21,8 +19,8 @@ def index_app(qapp, doc_list) -> app.IndexApp:
 
 
 @pytest.fixture
-def main_page(index_app) -> testing_utils.MainPage:
-    return testing_utils.MainPage(index_app.engine.rootObjects()[0])
+def main_page(index_app) -> pages.MainPage:
+    return pages.MainPage(index_app.engine.rootObjects()[0])
 
 
 def test_document_list_content_can_be_retrieved(main_page, doc_list) -> None:
