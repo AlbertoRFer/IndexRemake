@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/qt">
+        <file>qml/com/indexremake/qmldir</file>
+        <file>qml/com/indexremake/MainWindow.qml</file>
+    </qresource>
+</RCC>
