@@ -5,6 +5,7 @@ import pytest
 from PySide6 import QtCore
 
 from indexremake import app
+from tests import testing_utils
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
@@ -22,20 +23,12 @@ def test_engine_can_load(index_app) -> None:
     assert index_app.engine.rootObjects()
 
 
-def _find_object(root: QtCore.QObject, object_name: str) -> QtCore.QObject:
-    obj = root.findChild(QtCore.QObject, object_name)
-
-    if obj is None:
-        raise RuntimeError(f"{object_name} not found — check objectName in QML")
-
-    return obj
+@pytest.fixture
+def main_page(index_app) -> testing_utils.MainPage:
+    return testing_utils.MainPage(index_app.engine.rootObjects()[0])
 
 
-def test_document_list_content_can_be_retrieved(index_app) -> None:
-    root = index_app.engine.rootObjects()[0]
-    documents_list = _find_object(root, "documentsList")
-    documents_list_model = typing.cast(
-        QtCore.QAbstractItemModel, documents_list.property("model")
-    )
+def test_document_list_content_can_be_retrieved(main_page) -> None:
+    documents = main_page.documents_in_list
 
-    assert documents_list_model.rowCount() == 0
+    assert len(documents) == 0
