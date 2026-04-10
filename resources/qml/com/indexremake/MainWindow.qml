@@ -6,13 +6,9 @@ import com.indexremake
 ApplicationWindow {
     visible: true
 
-    MainPresenter {
-        id: mainPresenter
-    }
-
     ListView {
         objectName: "documentsList"
 
-        model: mainPresenter.documentsListModel
+        model: MainPresenter.documentsListModel
     }
 }
