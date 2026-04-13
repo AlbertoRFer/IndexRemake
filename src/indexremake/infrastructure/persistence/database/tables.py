@@ -1,17 +1,17 @@
 import sqlalchemy as sa
 
-metadata = sa.MetaData()
+from indexremake.infrastructure.persistence.database import base
 
 folders = sa.Table(
     "folders",
-    metadata,
+    base.metadata,
     sa.Column("id", sa.Integer, primary_key=True, autoincrement=True),
     sa.Column("year", sa.Integer),
 )
 
 documents = sa.Table(
     "documents",
-    metadata,
+    base.metadata,
     sa.Column("id", sa.Integer, primary_key=True, autoincrement=True),
     sa.Column("folder_id", sa.Integer, sa.ForeignKey("folders.id")),
     sa.Column("document_number", sa.Integer),
@@ -20,7 +20,7 @@ documents = sa.Table(
 
 users = sa.Table(
     "users",
-    metadata,
+    base.metadata,
     sa.Column("id", sa.Integer, primary_key=True, autoincrement=True),
     sa.Column("document_id", sa.Integer, sa.ForeignKey("documents.id")),
     sa.Column("position", sa.Integer),

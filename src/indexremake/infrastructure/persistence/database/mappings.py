@@ -1,21 +1,22 @@
 from sqlalchemy import orm
 
 from indexremake import domain
-from indexremake.infrastructure.persistence.database import tables
-
-mapper_registry = orm.registry(metadata=tables.metadata)
+from indexremake.infrastructure.persistence.database import base, tables
 
 
 def start_mappers() -> None:
-    mapper_registry.map_imperatively(domain.User, tables.users)
-    mapper_registry.map_imperatively(
+    if base.mapper_registry.mappers:
+        return
+
+    base.mapper_registry.map_imperatively(domain.User, tables.users)
+    base.mapper_registry.map_imperatively(
         domain.Document,
         tables.documents,
         properties={
             "users": orm.relationship(domain.User, order_by=tables.users.c.position)
         },
     )
-    mapper_registry.map_imperatively(
+    base.mapper_registry.map_imperatively(
         domain.Folder,
         tables.folders,
         properties={
