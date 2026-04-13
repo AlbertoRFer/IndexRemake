@@ -1,26 +1,26 @@
 import sqlalchemy as sa
 
-from indexremake.infrastructure.persistence import base
+metadata = sa.MetaData()
 
-folders_table = sa.Table(
+folders = sa.Table(
     "folders",
-    base.metadata,
+    metadata,
     sa.Column("id", sa.Integer, primary_key=True, autoincrement=True),
     sa.Column("year", sa.Integer),
 )
 
-documents_table = sa.Table(
+documents = sa.Table(
     "documents",
-    base.metadata,
+    metadata,
     sa.Column("id", sa.Integer, primary_key=True, autoincrement=True),
     sa.Column("folder_id", sa.Integer, sa.ForeignKey("folders.id")),
     sa.Column("document_number", sa.Integer),
     sa.Column("title", sa.String),
 )
 
-users_table = sa.Table(
+users = sa.Table(
     "users",
-    base.metadata,
+    metadata,
     sa.Column("id", sa.Integer, primary_key=True, autoincrement=True),
     sa.Column("document_id", sa.Integer, sa.ForeignKey("documents.id")),
     sa.Column("position", sa.Integer),

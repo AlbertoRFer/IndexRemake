@@ -4,13 +4,13 @@ import pytest
 import sqlalchemy as sa
 from sqlalchemy import orm
 
-from indexremake.infrastructure.persistence import base, mappings
+from indexremake.infrastructure.persistence.database import mappings, tables
 
 
 @pytest.fixture
 def db_engine() -> sa.Engine:
     engine = sa.create_engine("sqlite:///:memory:")
-    base.metadata.create_all(engine)
+    tables.metadata.create_all(engine)
     return engine
 
 
