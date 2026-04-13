@@ -2,16 +2,15 @@ import typing
 
 import attrs
 import pytest
+import pytest_cases
 import sqlalchemy as sa
 from sqlalchemy import orm
 
 from indexremake import domain
 
 
-# db_session needs to run first so the mappers are called
-# before creating the domain objects
 @pytest.fixture
-def users(db_session: orm.Session) -> list[domain.User]:
+def users() -> list[domain.User]:
     return [
         domain.User("John", None, "Doe", "Tre"),
         domain.User("Jane", None, "Doe", "Fire"),
@@ -40,7 +39,26 @@ def folders(documents: list[domain.Document]) -> list[domain.Folder]:
 
 
 @pytest.fixture
-def db_with_users(db_session: orm.Session) -> orm.Session:
+def db_with_data(db_session: orm.Session) -> orm.Session:
+    db_session.execute(
+        sa.text("""
+        INSERT INTO folders (year)
+        VALUES
+            (2025),
+            (2026)
+        """)
+    )
+
+    db_session.execute(
+        sa.text("""
+        INSERT INTO documents (folder_id, document_number, title)
+        VALUES
+            (1, 1, 'Document 1'),
+            (1, 2, 'Document 2'),
+            (2, 3, 'Document 3')
+        """)
+    )
+
     db_session.execute(
         sa.text("""
         INSERT INTO users (document_id, position, first_name, middle_name, last_name1, last_name2)
@@ -56,91 +74,27 @@ def db_with_users(db_session: orm.Session) -> orm.Session:
     return db_session
 
 
-@pytest.fixture
-def db_with_documents_and_users(db_with_users: orm.Session) -> orm.Session:
-    db_with_users.execute(
-        sa.text("""
-        INSERT INTO documents (folder_id, document_number, title)
-        VALUES
-            (1, 1, 'Document 1'),
-            (1, 2, 'Document 2'),
-            (2, 3, 'Document 3')
-        """)
-    )
-    return db_with_users
-
-
-@pytest.fixture
-def db_with_folders_documents_and_users(
-    db_with_documents_and_users: orm.Session,
-) -> orm.Session:
-    db_with_documents_and_users.execute(
-        sa.text("""
-        INSERT INTO folders (year)
-        VALUES
-            (2025),
-            (2026)
-        """)
-    )
-    return db_with_documents_and_users
-
-
-def test_mapper_can_load_users(
-    db_with_users: orm.Session, users: list[domain.User]
+@pytest_cases.parametrize(
+    "domain_type, domain_objects",
+    [
+        (domain.User, users),
+        (domain.Document, documents),
+        (domain.Folder, folders),
+    ],
+    ids=["users", "documents", "folders"],
+)
+def test_mapper_can_load_domain_objects(
+    db_with_data: orm.Session,
+    domain_type: type[domain.User | domain.Document | domain.Folder],
+    domain_objects: typing.Iterable[domain.User | domain.Document | domain.Folder],
 ) -> None:
-    expected_users = users
+    # Given a database with several users, documents and folders
 
-    output_users = db_with_users.query(domain.User).all()
-    assert expected_users == output_users
+    # When we load the objects
+    output_data = db_with_data.query(domain_type).all()
 
-
-def test_mapper_can_load_documents(
-    db_with_documents_and_users: orm.Session, documents: list[domain.Document]
-) -> None:
-    expected_documents = documents
-
-    output_documents = db_with_documents_and_users.query(domain.Document).all()
-    assert expected_documents == output_documents
-
-
-def test_mapper_can_load_folders(
-    db_with_folders_documents_and_users: orm.Session, folders: list[domain.Folder]
-) -> None:
-    expected_folders = folders
-
-    output_folders = db_with_folders_documents_and_users.query(domain.Folder).all()
-    assert expected_folders == output_folders
-
-
-def fetch_user_data_from_db(
-    db_session: orm.Session,
-) -> typing.Sequence[sa.Row[typing.Any]]:
-    return list(
-        db_session.execute(
-            sa.text("""
-            SELECT
-                users.first_name,
-                users.middle_name,
-                users.last_name1,
-                users.last_name2
-            FROM users
-            ORDER BY users.document_id, users.position
-            """)
-        ).fetchall()
-    )
-
-
-def test_mapper_can_save_users(
-    db_session: orm.Session, users: list[domain.User]
-) -> None:
-    for user in users:
-        db_session.add(user)
-    db_session.commit()
-
-    output_data = fetch_user_data_from_db(db_session)
-    expected_data = [attrs.astuple(user) for user in users]
-    for expected_user, output_user in zip(expected_data, output_data, strict=True):
-        assert expected_user == output_user
+    # Then we get the objects with the correct data
+    assert domain_objects == output_data
 
 
 def fetch_document_data_from_db(
@@ -163,14 +117,17 @@ def fetch_document_data_from_db(
     ).fetchall()
 
 
-def test_mapper_can_save_documents(
+def test_mapper_can_save_documents_and_users(
     db_session: orm.Session, documents: list[domain.Document]
 ) -> None:
+    # Given a document with users
     document_to_save = documents[0]
 
+    # When we save it into the db
     db_session.add(document_to_save)
     db_session.commit()
 
+    # Then the data in the db matches the data of the saved domain object
     rows = fetch_document_data_from_db(db_session)
 
     assert document_to_save.document_number == rows[0].document_number
@@ -200,11 +157,14 @@ def fetch_folder_data_from_db(
 def test_mapper_can_save_folder(
     db_session: orm.Session, folders: list[domain.Folder]
 ) -> None:
+    # Given a folder with documents
     folder_to_save = folders[0]
 
+    # When we save it into the db
     db_session.add(folder_to_save)
     db_session.commit()
 
+    # Then the data in the db matches the data of the saved domain object
     rows = fetch_folder_data_from_db(db_session)
 
     assert folder_to_save.year == rows[0].year
