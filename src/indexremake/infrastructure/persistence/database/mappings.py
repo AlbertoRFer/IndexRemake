@@ -1,4 +1,5 @@
 from sqlalchemy import orm
+from sqlalchemy.ext import orderinglist
 
 from indexremake import domain
 from indexremake.infrastructure.persistence.database import base, tables
@@ -13,7 +14,11 @@ def start_mappers() -> None:
         domain.Document,
         tables.documents,
         properties={
-            "users": orm.relationship(domain.User, order_by=tables.users.c.position)
+            "users": orm.relationship(
+                domain.User,
+                order_by=tables.users.c.position,
+                collection_class=orderinglist.ordering_list("position"),
+            )
         },
     )
     base.mapper_registry.map_imperatively(
