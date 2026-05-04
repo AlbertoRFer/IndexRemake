@@ -117,14 +117,15 @@ def fetch_document_data_from_db(
     ).fetchall()
 
 
-def test_mapper_can_save_documents_and_users(
+def test_mapper_can_save_documents_with_users(
     db_session: orm.Session, documents: list[domain.Document]
 ) -> None:
     # Given a document with users
     document_to_save = documents[0]
+    test_folder = domain.Folder(2025, [document_to_save])
 
     # When we save it into the db
-    db_session.add(document_to_save)
+    db_session.add(test_folder)
     db_session.commit()
 
     # Then the data in the db matches the data of the saved domain object
@@ -154,7 +155,7 @@ def fetch_folder_data_from_db(
     ).fetchall()
 
 
-def test_mapper_can_save_folder(
+def test_mapper_can_save_folder_with_documents(
     db_session: orm.Session, folders: list[domain.Folder]
 ) -> None:
     # Given a folder with documents
