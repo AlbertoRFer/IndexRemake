@@ -1,3 +1,5 @@
+import sqlite3
+
 import sqlalchemy as sa
 from sqlalchemy import event, orm
 
@@ -12,10 +14,13 @@ class SQLiteDatabase:
 
     def _create_engine(self, db_path: str) -> None:
         self._engine = sa.create_engine(f"sqlite:///{db_path}")
+        event.listen(self._engine, "connect", self._enable_foreign_keys)
 
-        @event.listens_for(self._engine, "connect")
-        def enable_foreign_keys(dbapi_connection, _):
-            dbapi_connection.execute("PRAGMA foreign_keys=ON")
+    @staticmethod
+    def _enable_foreign_keys(
+        dbapi_connection: sqlite3.Connection, _: sa.pool.ConnectionPoolEntry
+    ) -> None:
+        dbapi_connection.execute("PRAGMA foreign_keys=ON")
 
     def create_all(self) -> None:
         base.metadata.create_all(self._engine)
