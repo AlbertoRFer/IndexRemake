@@ -22,11 +22,13 @@ def _to_document_summary_dto(
 def get_documents_per_year(
     db_session: orm.Session, year: int
 ) -> list[dtos.DocumentSummaryDTO]:
-    user_count_subquery = (
-        sa.select(sa.func.count(tables.users.c.id))
-        .where(tables.users.c.document_id == tables.documents.c.id)
-        .scalar_subquery()
-        .correlate(tables.documents)
+    temp_table = (
+        sa.select(
+            tables.users.c.document_id,
+            sa.func.count(tables.users.c.id).label("users_per_document"),
+        )
+        .group_by(tables.users.c.document_id)
+        .subquery()
     )
 
     main_query = (
@@ -37,7 +39,7 @@ def get_documents_per_year(
             tables.users.c.middle_name,
             tables.users.c.last_name1,
             tables.users.c.last_name2,
-            (user_count_subquery).label("users_per_document"),
+            temp_table.c.users_per_document,
         )
         .join(
             tables.folders,
@@ -47,6 +49,7 @@ def get_documents_per_year(
             tables.users,
             tables.users.c.document_id == tables.documents.c.id,
         )
+        .join(temp_table, temp_table.c.document_id == tables.documents.c.id)
         .where(tables.folders.c.year == year)
         .where(tables.users.c.position == 0)
         .order_by(tables.documents.c.document_number)
