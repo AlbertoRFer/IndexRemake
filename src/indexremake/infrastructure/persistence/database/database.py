@@ -10,7 +10,10 @@ class SQLiteDatabase:
     def __init__(self, db_path: str) -> None:
         self._create_engine(db_path)
 
-        self._session_maker = orm.sessionmaker(bind=self._engine)
+        mappings.start_mappers()
+        base.metadata.create_all(self._engine)
+
+        self._Session = orm.sessionmaker(bind=self._engine)
 
     def _create_engine(self, db_path: str) -> None:
         self._engine = sa.create_engine(f"sqlite:///{db_path}")
@@ -22,8 +25,8 @@ class SQLiteDatabase:
     ) -> None:
         dbapi_connection.execute("PRAGMA foreign_keys=ON")
 
-    def create_all(self) -> None:
-        base.metadata.create_all(self._engine)
-
     def get_session(self) -> orm.Session:
-        return self._session_maker()
+        return self._Session()
+
+    def dispose(self) -> None:
+        self._engine.dispose()
