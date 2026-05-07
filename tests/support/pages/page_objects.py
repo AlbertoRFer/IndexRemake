@@ -18,7 +18,7 @@ class MainPage:
     _root: QtCore.QObject
     _documents_list: QtCore.QObject = attrs.field(init=False)
 
-    def __attrs_post_init__(self):
+    def __attrs_post_init__(self) -> None:
         self._documents_list = _find_object(self._root, "documentsList")
 
     @property
