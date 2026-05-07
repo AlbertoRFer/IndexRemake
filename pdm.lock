@@ -5,7 +5,7 @@
 groups = ["default", "dev", "lint", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:b25b7dddd7fe3293cf339eb1be629e87abf0a3a684a0ebc25807403bb882394e"
+content_hash = "sha256:c2234ed1cd205f773d415013fc218eb611e85608ac66129899ffcef9d2ceb643"
 
 [[metadata.targets]]
 requires_python = ">=3.14,<3.15"
@@ -553,6 +553,22 @@ files = [
 ]
 
 [[package]]
+name = "pytest-env"
+version = "1.6.0"
+requires_python = ">=3.10"
+summary = "pytest plugin that allows you to add environment variables."
+groups = ["test"]
+dependencies = [
+    "pytest>=9.0.2",
+    "python-dotenv>=1.2.2",
+    "tomli>=2.4; python_version < \"3.11\"",
+]
+files = [
+    {file = "pytest_env-1.6.0-py3-none-any.whl", hash = "sha256:1e7f8a62215e5885835daaed694de8657c908505b964ec8097a7ce77b403d9a3"},
+    {file = "pytest_env-1.6.0.tar.gz", hash = "sha256:ac02d6fba16af54d61e311dd70a3c61024a4e966881ea844affc3c8f0bf207d3"},
+]
+
+[[package]]
 name = "pytest-icdiff"
 version = "0.9"
 requires_python = ">=3.7"
@@ -610,6 +626,17 @@ dependencies = [
 files = [
     {file = "pytest-testdox-3.1.0.tar.gz", hash = "sha256:f48c49c517f0fb926560b383062db4961112078ec6ca555f91692c661bb5c765"},
     {file = "pytest_testdox-3.1.0-py2.py3-none-any.whl", hash = "sha256:f3a8f0789d668ccfb60f15aab81fb927b75066cfd19209176166bd7cecae73e6"},
+]
+
+[[package]]
+name = "python-dotenv"
+version = "1.2.2"
+requires_python = ">=3.10"
+summary = "Read key-value pairs from a .env file and set them as environment variables"
+groups = ["test"]
+files = [
+    {file = "python_dotenv-1.2.2-py3-none-any.whl", hash = "sha256:1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a"},
+    {file = "python_dotenv-1.2.2.tar.gz", hash = "sha256:2c371a91fbd7ba082c2c1dc1f8bf89ca22564a087c2c287cd9b662adde799cf3"},
 ]
 
 [[package]]
