@@ -4,6 +4,7 @@ import attrs
 from PySide6 import QtCore
 
 from indexremake import dtos
+from indexremake.bridge import models
 
 
 def _find_object(root: QtCore.QObject, object_name: str) -> QtCore.QObject:
@@ -26,7 +27,7 @@ class MainPage:
     @property
     def document_summaries(self) -> list[dtos.DocumentSummaryDTO]:
         model = typing.cast(
-            QtCore.QAbstractItemModel, self._documents_list.property("model")
+            models.DocumentSummaryModel, self._documents_list.property("model")
         )
 
         summaries = []
