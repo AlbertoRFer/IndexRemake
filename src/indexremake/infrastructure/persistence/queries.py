@@ -9,13 +9,13 @@ def _to_document_summary_dto(
     row: sa.Row[tuple[int, str, str, str, str, str, int]],
 ) -> dtos.DocumentSummaryDTO:
     return dtos.DocumentSummaryDTO(
-        row.document_number,
-        row.title,
-        row.first_name,
-        row.middle_name,
-        row.last_name1,
-        row.last_name2,
-        row.users_per_document,
+        number=row.number,
+        title=row.title,
+        number_of_users=row.users_per_document,
+        user_first_name=row.first_name,
+        user_middle_name=row.middle_name,
+        user_last_name1=row.last_name1,
+        user_last_name2=row.last_name2,
     )
 
 
@@ -33,7 +33,7 @@ def get_documents_per_year(
 
     main_query = (
         sa.select(
-            tables.documents.c.document_number,
+            tables.documents.c.number,
             tables.documents.c.title,
             tables.users.c.first_name,
             tables.users.c.middle_name,
@@ -52,7 +52,7 @@ def get_documents_per_year(
         .join(temp_table, temp_table.c.document_id == tables.documents.c.id)
         .where(tables.folders.c.year == year)
         .where(tables.users.c.position == 0)
-        .order_by(tables.documents.c.document_number)
+        .order_by(tables.documents.c.number)
     )
 
     rows = db_session.execute(main_query).all()

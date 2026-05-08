@@ -14,7 +14,7 @@ documents = sa.Table(
     base.metadata,
     sa.Column("id", sa.Integer, primary_key=True, autoincrement=True, nullable=False),
     sa.Column("folder_id", sa.Integer, sa.ForeignKey("folders.id"), nullable=False),
-    sa.Column("document_number", sa.Integer, nullable=False),
+    sa.Column("number", sa.Integer, nullable=False),
     sa.Column("title", sa.String, nullable=False),
 )
 

@@ -21,13 +21,13 @@ def build_summaries(
 ) -> list[dtos.DocumentSummaryDTO]:
     return [
         dtos.DocumentSummaryDTO(
-            doc.document_number,
-            doc.title,
-            doc.users[0].first_name,
-            doc.users[0].middle_name,
-            doc.users[0].last_name1,
-            doc.users[0].last_name2,
-            len(doc.users),
+            number=doc.number,
+            title=doc.title,
+            number_of_users=len(doc.users),
+            user_first_name=doc.users[0].first_name,
+            user_middle_name=doc.users[0].middle_name,
+            user_last_name1=doc.users[0].last_name1,
+            user_last_name2=doc.users[0].last_name2,
         )
         for doc in documents
     ]

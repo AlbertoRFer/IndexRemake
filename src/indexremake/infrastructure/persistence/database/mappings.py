@@ -26,7 +26,7 @@ def start_mappers() -> None:
         tables.folders,
         properties={
             "documents": orm.relationship(
-                domain.Document, order_by=tables.documents.c.document_number
+                domain.Document, order_by=tables.documents.c.number
             )
         },
     )

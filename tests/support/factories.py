@@ -43,7 +43,7 @@ def insert_document_data_into_db(
     for document in document_data:
         stmt = sa.insert(tables.documents).values(
             folder_id=folder_id,
-            document_number=document["number"],
+            number=document["number"],
             title=document["title"],
         )
         result = db_session.execute(stmt)
@@ -80,7 +80,7 @@ def build_folders(folder_data: list[FolderData]) -> list[domain.Folder]:
 def build_documents(document_data: list[DocumentData]) -> list[domain.Document]:
     return [
         domain.Document(
-            document_number=document["number"],
+            number=document["number"],
             title=document["title"],
             users=build_users(document["users"]),
         )

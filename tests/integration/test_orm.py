@@ -2,7 +2,6 @@ import typing
 
 import attrs
 import pytest
-import pytest_cases
 import sqlalchemy as sa
 from sqlalchemy import orm
 
@@ -41,7 +40,7 @@ def fetch_document_data_from_db(
     return db_session.execute(
         sa.text("""
         SELECT
-            documents.document_number,
+            documents.number,
             documents.title,
             users.position,
             users.first_name,
@@ -50,7 +49,7 @@ def fetch_document_data_from_db(
             users.last_name2
         FROM documents
         JOIN users ON users.document_id == documents.id
-        ORDER BY documents.document_number, users.position
+        ORDER BY documents.number, users.position
     """)
     ).fetchall()
 
@@ -70,7 +69,7 @@ def test_mapper_can_save_documents_with_users(
     # Then the data in the db matches the data of the saved domain object
     rows = fetch_document_data_from_db(session)
 
-    assert saved_document.document_number == rows[0].document_number
+    assert saved_document.number == rows[0].number
     assert saved_document.title == rows[0].title
 
     for user, row in zip(saved_document.users, rows, strict=True):
@@ -85,11 +84,11 @@ def fetch_folder_data_from_db(
         sa.text("""
         SELECT
             folders.year,
-            documents.document_number,
+            documents.number,
             documents.title
         FROM folders
         JOIN documents ON documents.folder_id == folders.id
-        ORDER BY folders.year, documents.document_number
+        ORDER BY folders.year, documents.number
     """)
     ).fetchall()
 
@@ -114,5 +113,5 @@ def test_mapper_can_save_folder_with_documents(
     assert all(saved_folder.year == row.year for row in rows)
 
     for document, row in zip(saved_folder.documents, rows, strict=True):
-        assert document.document_number == row.document_number
+        assert document.number == row.number
         assert document.title == row.title
