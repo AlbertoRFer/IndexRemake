@@ -5,16 +5,18 @@ import com.indexremake
 
 ApplicationWindow {
     visible: true
+    width: 400
+    height: 600
+    title: "Indice"
 
-    ListView {
-        objectName: "documentsList"
-        width: parent.width
-        height: 600
-        model: MainPresenter.documentsListModel
+    Page {
+        anchors.fill: parent
+        DocumentSummaryView {
+            objectName: "docSummaryList"
+            width: parent.width
+            height: parent.height
 
-        delegate: ItemDelegate {
-            width: ListView.view.width
-            text: model.display
+            model: MainPresenter.documentsListModel
         }
     }
 }

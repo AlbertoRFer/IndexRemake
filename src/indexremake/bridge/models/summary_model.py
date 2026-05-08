@@ -28,7 +28,9 @@ class DocumentSummaryModel(QtCore.QAbstractListModel):
         return len(self._summaries)
 
     def load_summaries(self, summaries: list[dtos.DocumentSummaryDTO]) -> None:
+        self.beginResetModel()
         self._summaries = summaries
+        self.endResetModel()
 
     def data(
         self,
@@ -61,3 +63,15 @@ class DocumentSummaryModel(QtCore.QAbstractListModel):
 
         if role == self.Role.UserLastName2:
             return summary.user_last_name2
+
+    def roleNames(self) -> dict[int, QtCore.QByteArray]:
+        roles = super().roleNames()
+        roles[self.Role.Number] = QtCore.QByteArray(b"number")
+        roles[self.Role.Title] = QtCore.QByteArray(b"title")
+        roles[self.Role.NumberOfUsers] = QtCore.QByteArray(b"numberOfUsers")
+        roles[self.Role.UserFirstName] = QtCore.QByteArray(b"userFirstName")
+        roles[self.Role.UserMiddleName] = QtCore.QByteArray(b"userMiddleName")
+        roles[self.Role.UserLastName1] = QtCore.QByteArray(b"userLastName1")
+        roles[self.Role.UserLastName2] = QtCore.QByteArray(b"userLastName2")
+
+        return roles
