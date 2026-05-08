@@ -1,7 +1,7 @@
 import pytest
 import pytest_cases
 
-from indexremake import domain, dtos
+from indexremake import dtos
 from indexremake.infrastructure.persistence import database, queries
 from tests.support import data, factories
 
@@ -12,38 +12,24 @@ def seed_data() -> list[factories.FolderData]:
 
 
 @pytest.fixture
-def folders(seed_data: list[factories.FolderData]) -> list[domain.Folder]:
-    return factories.build_folders(seed_data)
-
-
-def build_summaries(
-    documents: list[domain.Document],
+def summaries_2025(
+    seed_data: list[factories.FolderData],
 ) -> list[dtos.DocumentSummaryDTO]:
-    return [
-        dtos.DocumentSummaryDTO(
-            number=doc.number,
-            title=doc.title,
-            number_of_users=len(doc.users),
-            user_first_name=doc.users[0].first_name,
-            user_middle_name=doc.users[0].middle_name,
-            user_last_name1=doc.users[0].last_name1,
-            user_last_name2=doc.users[0].last_name2,
-        )
-        for doc in documents
-    ]
+    folder_data_2025 = seed_data[0]
+
+    return factories.build_document_summaries(folder_data_2025["documents"])
 
 
 def test_query_can_return_documents_for_a_given_year(
     seeded_db: database.SQLiteDatabase,
-    folders: list[domain.Folder],
+    summaries_2025: list[dtos.DocumentSummaryDTO],
 ) -> None:
-    summaries = build_summaries(folders[0].documents)
     session = seeded_db.get_session()
 
     fetched_docs = queries.get_documents_per_year(session, 2025)
 
-    assert len(summaries) == len(fetched_docs)
-    assert summaries == fetched_docs
+    assert len(summaries_2025) == len(fetched_docs)
+    assert summaries_2025 == fetched_docs
 
 
 @pytest_cases.parametrize(

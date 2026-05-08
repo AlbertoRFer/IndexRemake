@@ -3,7 +3,7 @@ from typing import TypedDict
 import sqlalchemy as sa
 from sqlalchemy import orm
 
-from indexremake import domain
+from indexremake import domain, dtos
 from indexremake.infrastructure.persistence.database import tables
 
 
@@ -97,4 +97,21 @@ def build_users(user_data: list[UserData]) -> list[domain.User]:
             last_name2=user["last_name2"],
         )
         for user in user_data
+    ]
+
+
+def build_document_summaries(
+    document_data: list[DocumentData],
+) -> list[dtos.DocumentSummaryDTO]:
+    return [
+        dtos.DocumentSummaryDTO(
+            number=document["number"],
+            title=document["title"],
+            number_of_users=len(document["users"]),
+            user_first_name=document["users"][0]["first_name"],
+            user_middle_name=document["users"][0]["middle_name"],
+            user_last_name1=document["users"][0]["last_name1"],
+            user_last_name2=document["users"][0]["last_name2"],
+        )
+        for document in document_data
     ]
