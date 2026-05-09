@@ -94,7 +94,7 @@
   // Qt-Qtml
   "qt-qml.qmlls.additionalImportPaths": [
     "/usr/lib/qt6/qml/",
-    "${workspaceFolder}/src/todo/frontend/qml_modules",
-    "${workspaceFolder}/qmltypes"
+    "${workspaceFolder}/resources/qml/",
+    "${workspaceFolder}/qmltypes/"
   ]
 }

@@ -7,6 +7,7 @@ from indexremake.infrastructure.persistence import database
 
 if __name__ == "__main__":
     qapp = QtWidgets.QApplication()
+    qapp.styleHints().setWheelScrollLines(15)
 
     db = database.SQLiteDatabase("indexremake.db")
     index_app = bootstrap.create_index_app(db)

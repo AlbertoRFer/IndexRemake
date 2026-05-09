@@ -3,7 +3,7 @@ from PySide6 import QtCore, QtQml
 from indexremake import services
 from indexremake.bridge import models
 
-QML_IMPORT_NAME = "com.indexremake"
+QML_IMPORT_NAME = "com.indexremake.bridge"
 QML_IMPORT_MAJOR_VERSION = 1
 
 

@@ -68,7 +68,7 @@ class DocumentSummaryModel(QtCore.QAbstractListModel):
         roles = super().roleNames()
         roles[self.Role.Number] = QtCore.QByteArray(b"number")
         roles[self.Role.Title] = QtCore.QByteArray(b"title")
-        roles[self.Role.NumberOfUsers] = QtCore.QByteArray(b"numberOfUsers")
+        roles[self.Role.NumberOfUsers] = QtCore.QByteArray(b"userCount")
         roles[self.Role.UserFirstName] = QtCore.QByteArray(b"userFirstName")
         roles[self.Role.UserMiddleName] = QtCore.QByteArray(b"userMiddleName")
         roles[self.Role.UserLastName1] = QtCore.QByteArray(b"userLastName1")
