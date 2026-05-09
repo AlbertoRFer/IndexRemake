@@ -107,11 +107,13 @@ def build_document_summaries(
         dtos.DocumentSummaryDTO(
             number=document["number"],
             title=document["title"],
-            number_of_users=len(document["users"]),
-            user_first_name=document["users"][0]["first_name"],
-            user_middle_name=document["users"][0]["middle_name"],
-            user_last_name1=document["users"][0]["last_name1"],
-            user_last_name2=document["users"][0]["last_name2"],
+            user_count=len(document["users"]),
+            user_full_name=dtos.format_full_name(
+                document["users"][0]["first_name"],
+                document["users"][0]["middle_name"],
+                document["users"][0]["last_name1"],
+                document["users"][0]["last_name2"],
+            ),
         )
         for document in document_data
     ]

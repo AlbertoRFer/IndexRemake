@@ -36,11 +36,8 @@ class MainPage:
             summary = dtos.DocumentSummaryDTO(
                 number=model.data(idx, model.Role.Number),
                 title=model.data(idx, model.Role.Title),
-                user_first_name=model.data(idx, model.Role.UserFirstName),
-                user_middle_name=model.data(idx, model.Role.UserMiddleName),
-                user_last_name1=model.data(idx, model.Role.UserLastName1),
-                user_last_name2=model.data(idx, model.Role.UserLastName2),
-                number_of_users=model.data(idx, model.Role.NumberOfUsers),
+                user_count=model.data(idx, model.Role.NumberOfUsers),
+                user_full_name=model.data(idx, model.Role.UserFullName),
             )
             summaries.append(summary)
 

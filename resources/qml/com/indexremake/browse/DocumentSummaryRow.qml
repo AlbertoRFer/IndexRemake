@@ -11,10 +11,7 @@ Item {
     required property int number
     required property string title
     required property int userCount
-    required property string userFirstName
-    required property string userMiddleName
-    required property string userLastName1
-    required property string userLastName2
+    required property string userFullName
 
     // Layout
     required property int colNumberWidth
@@ -22,11 +19,6 @@ Item {
     required property int colUsersWidth
 
     readonly property int colTitleWidth: width - colNumberWidth - colMainUserWidth - colUsersWidth
-
-    readonly property string fullName: {
-        let parts = [userFirstName, userMiddleName, userLastName1, userLastName2];
-        return parts.filter(p => p.length > 0).join(" ");
-    }
 
     component RowText: Text {
         font.family: Theme.fontFamily
@@ -93,7 +85,7 @@ Item {
 
         RowText {
             width: root.colMainUserWidth
-            text: root.fullName
+            text: root.userFullName
             elide: Text.ElideRight
         }
 

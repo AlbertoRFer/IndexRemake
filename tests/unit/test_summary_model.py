@@ -37,11 +37,8 @@ def test_empty_model_can_load_summaries(
         idx = model.index(row, 0)
         assert summary.number == model.data(idx, model.Role.Number)
         assert summary.title == model.data(idx, model.Role.Title)
-        assert summary.number_of_users == model.data(idx, model.Role.NumberOfUsers)
-        assert summary.user_first_name == model.data(idx, model.Role.UserFirstName)
-        assert summary.user_middle_name == model.data(idx, model.Role.UserMiddleName)
-        assert summary.user_last_name1 == model.data(idx, model.Role.UserLastName1)
-        assert summary.user_last_name2 == model.data(idx, model.Role.UserLastName2)
+        assert summary.user_count == model.data(idx, model.Role.NumberOfUsers)
+        assert summary.user_full_name == model.data(idx, model.Role.UserFullName)
 
 
 def test_model_can_refresh_summaries(
@@ -57,11 +54,8 @@ def test_model_can_refresh_summaries(
         idx = model.index(row, 0)
         assert summary.number == model.data(idx, model.Role.Number)
         assert summary.title == model.data(idx, model.Role.Title)
-        assert summary.number_of_users == model.data(idx, model.Role.NumberOfUsers)
-        assert summary.user_first_name == model.data(idx, model.Role.UserFirstName)
-        assert summary.user_middle_name == model.data(idx, model.Role.UserMiddleName)
-        assert summary.user_last_name1 == model.data(idx, model.Role.UserLastName1)
-        assert summary.user_last_name2 == model.data(idx, model.Role.UserLastName2)
+        assert summary.user_count == model.data(idx, model.Role.NumberOfUsers)
+        assert summary.user_full_name == model.data(idx, model.Role.UserFullName)
 
 
 def test_model_can_clear_summaries(

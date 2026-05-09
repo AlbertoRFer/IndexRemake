@@ -13,7 +13,7 @@ def test_documents_can_be_viewed(
 ) -> None:
     # Given a protocol with several documents
     folder_2025 = seed_data[0]
-    seeded_summaries = folder_2025["documents"]
+    seeded_summaries = factories.build_document_summaries(folder_2025["documents"])
 
     # When the aplication loads (handled by fixtures)
     # TODO: year selection not implemented yet, so we just use the first year
@@ -22,12 +22,7 @@ def test_documents_can_be_viewed(
     for expected_summary, retrieved_summary in zip(
         seeded_summaries, main_page.document_summaries, strict=True
     ):
-        assert expected_summary["number"] == retrieved_summary.number
-        assert expected_summary["title"] == retrieved_summary.title
-        assert len(expected_summary["users"]) == retrieved_summary.number_of_users
-
-        expected_user = expected_summary["users"][0]
-        assert expected_user["first_name"] == retrieved_summary.user_first_name
-        assert expected_user["middle_name"] == retrieved_summary.user_middle_name
-        assert expected_user["last_name1"] == retrieved_summary.user_last_name1
-        assert expected_user["last_name2"] == retrieved_summary.user_last_name2
+        assert expected_summary.number == retrieved_summary.number
+        assert expected_summary.title == retrieved_summary.title
+        assert expected_summary.user_count == retrieved_summary.user_count
+        assert expected_summary.user_full_name == retrieved_summary.user_full_name

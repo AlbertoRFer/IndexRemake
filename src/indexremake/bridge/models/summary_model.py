@@ -11,10 +11,7 @@ class DocumentSummaryModel(QtCore.QAbstractListModel):
         Number = QtCore.Qt.ItemDataRole.UserRole
         Title = QtCore.Qt.ItemDataRole.UserRole + 1
         NumberOfUsers = QtCore.Qt.ItemDataRole.UserRole + 2
-        UserFirstName = QtCore.Qt.ItemDataRole.UserRole + 3
-        UserMiddleName = QtCore.Qt.ItemDataRole.UserRole + 4
-        UserLastName1 = QtCore.Qt.ItemDataRole.UserRole + 5
-        UserLastName2 = QtCore.Qt.ItemDataRole.UserRole + 6
+        UserFullName = QtCore.Qt.ItemDataRole.UserRole + 3
 
     def __init__(self, parent: QtCore.QObject | None = None) -> None:
         super().__init__(parent)
@@ -50,28 +47,16 @@ class DocumentSummaryModel(QtCore.QAbstractListModel):
             return summary.title
 
         if role == self.Role.NumberOfUsers:
-            return summary.number_of_users
+            return summary.user_count
 
-        if role == self.Role.UserFirstName:
-            return summary.user_first_name
-
-        if role == self.Role.UserMiddleName:
-            return summary.user_middle_name
-
-        if role == self.Role.UserLastName1:
-            return summary.user_last_name1
-
-        if role == self.Role.UserLastName2:
-            return summary.user_last_name2
+        if role == self.Role.UserFullName:
+            return summary.user_full_name
 
     def roleNames(self) -> dict[int, QtCore.QByteArray]:
         roles = super().roleNames()
         roles[self.Role.Number] = QtCore.QByteArray(b"number")
         roles[self.Role.Title] = QtCore.QByteArray(b"title")
         roles[self.Role.NumberOfUsers] = QtCore.QByteArray(b"userCount")
-        roles[self.Role.UserFirstName] = QtCore.QByteArray(b"userFirstName")
-        roles[self.Role.UserMiddleName] = QtCore.QByteArray(b"userMiddleName")
-        roles[self.Role.UserLastName1] = QtCore.QByteArray(b"userLastName1")
-        roles[self.Role.UserLastName2] = QtCore.QByteArray(b"userLastName2")
+        roles[self.Role.UserFullName] = QtCore.QByteArray(b"userFullName")
 
         return roles

@@ -11,11 +11,10 @@ def _to_document_summary_dto(
     return dtos.DocumentSummaryDTO(
         number=row.number,
         title=row.title,
-        number_of_users=row.users_per_document,
-        user_first_name=row.first_name,
-        user_middle_name=row.middle_name,
-        user_last_name1=row.last_name1,
-        user_last_name2=row.last_name2,
+        user_count=row.users_per_document,
+        user_full_name=dtos.format_full_name(
+            row.first_name, row.middle_name, row.last_name1, row.last_name2
+        ),
     )
 
 
