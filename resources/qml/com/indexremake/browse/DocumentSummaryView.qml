@@ -6,6 +6,7 @@ import com.indexremake.core
 
 ListView {
     id: summaryList
+    objectName: "docSummaryList"
     clip: true
 
     readonly property int colNumberWidth: 52

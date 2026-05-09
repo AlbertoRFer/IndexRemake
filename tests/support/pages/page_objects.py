@@ -22,7 +22,7 @@ class MainPage:
     _documents_list: QtCore.QObject = attrs.field(init=False)
 
     def __attrs_post_init__(self) -> None:
-        self._documents_list = _find_object(self._root, "documentsList")
+        self._documents_list = _find_object(self._root, "docSummaryList")
 
     @property
     def document_summaries(self) -> list[dtos.DocumentSummaryDTO]:
