@@ -1,0 +1,4 @@
+module com.indexremake.browse
+DocumentSummaryView 1.0 DocumentSummaryView.qml
+DocumentSummaryHeader 1.0 DocumentSummaryHeader.qml
+DocumentSummaryRow 1.0 DocumentSummaryRow.qml

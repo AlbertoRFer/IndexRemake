@@ -1,6 +1,17 @@
 <RCC>
     <qresource prefix="/qt">
+        <file>fonts/Inter-VariableFont.ttf</file>
+        <!-- ############## QML ##############-->
         <file>qml/com/indexremake/qmldir</file>
         <file>qml/com/indexremake/MainWindow.qml</file>
+        <!-- Shared modules -->
+        <file>qml/com/indexremake/core/qmldir</file>
+        <file>qml/com/indexremake/core/Theme.qml</file>
+        <file>qml/com/indexremake/core/Lang.qml</file>
+        <!-- Browse view -->
+        <file>qml/com/indexremake/browse/qmldir</file>
+        <file>qml/com/indexremake/browse/DocumentSummaryView.qml</file>
+        <file>qml/com/indexremake/browse/DocumentSummaryHeader.qml</file>
+        <file>qml/com/indexremake/browse/DocumentSummaryRow.qml</file>
     </qresource>
 </RCC>

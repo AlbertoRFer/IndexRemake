@@ -1,0 +1,70 @@
+[
+  {
+    "year": 2025,
+    "documents": [
+      {
+        "number": 1,
+        "title": "Document 1",
+        "users": [
+          {
+            "first_name": "John",
+            "middle_name": null,
+            "last_name1": "Doe",
+            "last_name2": "Tre"
+          },
+          {
+            "first_name": "Jane",
+            "middle_name": null,
+            "last_name1": "Doe",
+            "last_name2": "Fire"
+          }
+        ]
+      },
+      {
+        "number": 2,
+        "title": "Document 2",
+        "users": [
+          {
+            "first_name": "Juan",
+            "middle_name": "Eriberto",
+            "last_name1": "Five",
+            "last_name2": "Six of Seven"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "year": 2026,
+    "documents": [
+      {
+        "number": 1,
+        "title": "Document 3",
+        "users": [
+          {
+            "first_name": "Camilo",
+            "middle_name": null,
+            "last_name1": "Cruz",
+            "last_name2": "Pereira"
+          },
+          {
+            "first_name": "Amalia",
+            "middle_name": "de la Caridad",
+            "last_name1": "Rodríguez",
+            "last_name2": "Díaz"
+          },
+          {
+            "first_name": "Marco",
+            "middle_name": "Polo",
+            "last_name1": "Traveller",
+            "last_name2": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "year": 2027,
+    "documents": []
+  }
+]

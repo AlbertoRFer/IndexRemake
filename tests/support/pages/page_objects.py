@@ -3,6 +3,9 @@ import typing
 import attrs
 from PySide6 import QtCore
 
+from indexremake import dtos
+from indexremake.bridge import models
+
 
 def _find_object(root: QtCore.QObject, object_name: str) -> QtCore.QObject:
     obj = root.findChild(QtCore.QObject, object_name)
@@ -18,20 +21,24 @@ class MainPage:
     _root: QtCore.QObject
     _documents_list: QtCore.QObject = attrs.field(init=False)
 
-    def __attrs_post_init__(self):
-        self._documents_list = _find_object(self._root, "documentsList")
+    def __attrs_post_init__(self) -> None:
+        self._documents_list = _find_object(self._root, "docSummaryList")
 
     @property
-    def documents_in_list(self) -> list[str]:
+    def document_summaries(self) -> list[dtos.DocumentSummaryDTO]:
         model = typing.cast(
-            QtCore.QAbstractItemModel, self._documents_list.property("model")
+            models.DocumentSummaryModel, self._documents_list.property("model")
         )
 
-        documents = []
+        summaries = []
         for i in range(model.rowCount()):
-            documents_data = model.data(
-                model.index(i, 0), QtCore.Qt.ItemDataRole.DisplayRole
+            idx = model.index(i, 0)
+            summary = dtos.DocumentSummaryDTO(
+                number=model.data(idx, model.Role.Number),
+                title=model.data(idx, model.Role.Title),
+                user_count=model.data(idx, model.Role.NumberOfUsers),
+                user_full_name=model.data(idx, model.Role.UserFullName),
             )
-            documents.append(documents_data)
+            summaries.append(summary)
 
-        return documents
+        return summaries
